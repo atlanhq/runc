@@ -1098,12 +1098,27 @@ func remount(m *configs.Mount, rootfs string, mountFd *int) error {
 		if err := unix.Statfs(source, &s); err != nil {
 			return &os.PathError{Op: "statfs", Path: source, Err: err}
 		}
-		if s.Flags&unix.MS_RDONLY != unix.MS_RDONLY {
+
+		// Define the flags to check for
+		checkflags := unix.MS_RDONLY | unix.MS_NODEV | unix.MS_NOEXEC | unix.MS_NOSUID |
+			unix.MS_NOATIME | unix.MS_RELATIME | unix.MS_STRICTATIME | unix.MS_NODIRATIME
+
+		// If none of the check flags are set, return the original error
+		if int(s.Flags)&checkflags == 0 {
 			return err
 		}
-		// ... and retry the mount with ro flag set.
-		flags |= unix.MS_RDONLY
+
+		// Retry the mount with additional flags
+		flags |= uintptr(int(s.Flags) & checkflags)
+
 		return mount(source, m.Destination, procfd, m.Device, flags, "")
+
+		//if s.Flags&unix.MS_RDONLY != unix.MS_RDONLY {
+		//	return err
+		//}
+		//// ... and retry the mount with ro flag set.
+		//flags |= unix.MS_RDONLY
+		//return mount(source, m.Destination, procfd, m.Device, flags, "")
 	})
 }
 
