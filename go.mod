@@ -8,7 +8,7 @@ require (
 	github.com/checkpoint-restore/go-criu/v7 v7.2.0
 	github.com/containerd/console v1.0.4
 	github.com/coreos/go-systemd/v22 v22.5.0
-	github.com/cyphar/filepath-securejoin v0.4.1
+	github.com/cyphar/filepath-securejoin v0.5.1
 	github.com/docker/go-units v0.5.0
 	github.com/godbus/dbus/v5 v5.1.0
 	github.com/moby/sys/capability v0.4.0
@@ -18,7 +18,7 @@ require (
 	github.com/mrunalp/fileutils v0.5.1
 	github.com/opencontainers/cgroups v0.0.1
 	github.com/opencontainers/runtime-spec v1.2.1
-	github.com/opencontainers/selinux v1.12.0
+	github.com/opencontainers/selinux v1.13.1
 	github.com/seccomp/libseccomp-golang v0.10.0
 	github.com/sirupsen/logrus v1.9.3
 	github.com/urfave/cli v1.22.16
